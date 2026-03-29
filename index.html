@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AudreaChenPhoto — Grad Photos</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #f5f0ea;
+    --warm-white: #faf8f5;
+    --stone: #c9bfb0;
+    --muted: #9e9287;
+    --dark: #1a1714;
+    --mid: #3d3830;
+    --accent: #8b7355;
+    --columbia: #75aadb;
+    --columbia-dark: #1d4f8c;
+    --columbia-deeper: #0e2a4e;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--warm-white);
+    color: var(--dark);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ──
+     TO USE YOUR OWN PHOTO: change the .hero background to:
+     background: url('YOUR_IMAGE_URL') center/cover no-repeat;
+     The .hero-bg overlay will darken/tint it automatically.
+  */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    background: linear-gradient(160deg, var(--columbia-deeper) 0%, var(--columbia-dark) 55%, #1a3d6e 100%);
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 70% at 50% 40%, rgba(117,170,219,0.14) 0%, transparent 65%),
+      radial-gradient(ellipse 100% 50% at 50% 100%, rgba(10,20,40,0.55) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+    opacity: 0.35;
+    pointer-events: none;
+  }
+
+  .hero-handle {
+    position: absolute;
+    top: 2rem; left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    color: rgba(200,220,245,0.65);
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.2s forwards;
+    white-space: nowrap;
+  }
+
+  .hero-content { position: relative; z-index: 2; padding: 2rem; }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(5rem, 15vw, 13rem);
+    font-weight: 900;
+    line-height: 0.88;
+    color: #e8f2fc;
+    letter-spacing: -0.01em;
+    opacity: 0;
+    animation: fadeUp 1.2s ease 0.4s forwards;
+  }
+
+  .hero-title em { font-style: italic; color: var(--columbia); }
+
+  .hero-sub {
+    margin-top: 2rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(0.85rem, 2vw, 1rem);
+    letter-spacing: 0.18em;
+    color: rgba(200,220,245,0.55);
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.8s forwards;
+  }
+
+  .hero-sub span { display: inline-block; margin: 0 0.6em; }
+  .hero-sub span::before { content: '·'; margin-right: 1.2em; color: var(--columbia); }
+  .hero-sub span:first-child::before { display: none; }
+
+  .scroll-cue {
+    position: absolute;
+    bottom: 2.5rem; left: 50%;
+    transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    color: rgba(200,220,245,0.45);
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+    opacity: 0; animation: fadeUp 1s ease 1.4s forwards;
+    cursor: pointer; text-decoration: none;
+  }
+
+  .scroll-cue::after {
+    content: '';
+    display: block; width: 1px; height: 40px;
+    background: linear-gradient(to bottom, var(--columbia), transparent);
+    animation: pulse 2s ease infinite;
+  }
+
+  /* ── ABOUT ── */
+  .about { background: var(--cream); padding: 5rem 2rem; text-align: center; }
+  .about-inner { max-width: 640px; margin: 0 auto; }
+
+  .label { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; }
+
+  .about h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 400; line-height: 1.2; color: var(--mid); margin-bottom: 1.5rem;
+  }
+  .about h2 em { font-style: italic; color: var(--columbia-dark); }
+
+  .about p { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; color: var(--muted); line-height: 1.9; }
+  .divider { width: 60px; height: 1px; background: var(--stone); margin: 2.5rem auto; }
+
+  /* ══ GALLERY ══ */
+  .gallery { background: var(--warm-white); padding: 6rem 2rem; }
+
+  .gallery-header { text-align: center; margin-bottom: 3.5rem; }
+
+  .gallery-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700; color: var(--mid); line-height: 1.15;
+  }
+  .gallery-header h2 em { font-style: italic; color: var(--columbia-dark); }
+  .gallery-header p { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--muted); margin-top: 0.75rem; }
+
+  .gallery-tabs {
+    display: flex; justify-content: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2.5rem;
+  }
+
+  .tab-btn {
+    background: transparent;
+    border: 1px solid var(--stone);
+    border-radius: 2px;
+    color: var(--muted);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.68rem; font-weight: 400; letter-spacing: 0.16em;
+    padding: 0.55rem 1.3rem; text-transform: uppercase;
+    transition: all 0.22s;
+  }
+  .tab-btn:hover { border-color: var(--columbia-dark); color: var(--columbia-dark); }
+  .tab-btn.active { background: var(--columbia-dark); border-color: var(--columbia-dark); color: #fff; }
+
+  .gallery-grid {
+    display: none;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 0.85rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    animation: fadeIn 0.4s ease;
+  }
+  .gallery-grid.active { display: grid; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Photo card */
+  .photo-card {
+    position: relative;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    border-radius: 3px;
+    background: #c8ddf0;
+    cursor: pointer;
+  }
+
+  .photo-card.wide { grid-column: span 2; aspect-ratio: 16/9; }
+  .photo-card.tall { grid-row: span 2; aspect-ratio: unset; }
+
+  .photo-card img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+    transition: transform 0.5s ease;
+  }
+  .photo-card:hover img { transform: scale(1.04); }
+
+  /* Placeholder */
+  .placeholder {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 0.6rem;
+    background: linear-gradient(135deg, #c8ddf0 0%, #a8c4e0 100%);
+  }
+  .placeholder svg { opacity: 0.35; }
+  .placeholder span {
+    font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--columbia-dark); opacity: 0.55;
+  }
+  /* Hide placeholder when img loads successfully */
+  .photo-card img[src]:not([src=""]) + .placeholder { display: none; }
+
+  /* Caption */
+  .photo-caption {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 1.2rem 1rem 0.9rem;
+    background: linear-gradient(transparent, rgba(14,42,78,0.72));
+    color: #e8f2fc;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 0.9rem;
+    opacity: 0; transform: translateY(6px);
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  .photo-card:hover .photo-caption { opacity: 1; transform: translateY(0); }
+
+  /* ── BOOKING ── */
+  .booking {
+    background: var(--columbia-deeper);
+    padding: 6rem 2rem;
+    position: relative; overflow: hidden;
+  }
+  .booking::before {
+    content: 'Book';
+    position: absolute; top: -2rem; right: -2rem;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(8rem, 20vw, 18rem);
+    font-weight: 900; font-style: italic;
+    color: rgba(117,170,219,0.05);
+    pointer-events: none; line-height: 1; white-space: nowrap;
+  }
+
+  .booking-inner { max-width: 700px; margin: 0 auto; position: relative; z-index: 1; }
+  .booking .label { color: rgba(200,220,245,0.5); }
+
+  .booking h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 700; color: #e8f2fc; line-height: 1.15; margin-bottom: 0.5rem;
+  }
+  .booking h2 em { font-style: italic; color: var(--columbia); }
+
+  .booking-note {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem; color: rgba(200,220,245,0.5);
+    margin-bottom: 3rem; line-height: 1.8;
+  }
+
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-group.full { grid-column: 1 / -1; }
+
+  label { font-size: 0.6rem; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(200,220,245,0.45); }
+
+  input, select, textarea {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(117,170,219,0.2);
+    border-radius: 2px;
+    color: #e8f2fc;
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 300;
+    padding: 0.85rem 1rem;
+    transition: border-color 0.25s, background 0.25s;
+    outline: none; width: 100%; -webkit-appearance: none;
+  }
+  input::placeholder, textarea::placeholder { color: rgba(117,170,219,0.22); }
+  select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239e9287' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; color: #e8f2fc;
+  }
+  select option { background: #0e2a4e; color: #e8f2fc; }
+  input:focus, select:focus, textarea:focus { border-color: var(--columbia); background: rgba(117,170,219,0.08); }
+  textarea { resize: vertical; min-height: 110px; }
+  input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.7) sepia(0.5) hue-rotate(180deg); cursor: pointer; }
+
+  .date-helper { margin-top: 0.5rem; font-size: 0.72rem; color: rgba(200,220,245,0.35); font-family: 'Cormorant Garamond', serif; font-style: italic; }
+  .date-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+  .date-tag {
+    background: rgba(117,170,219,0.1); border: 1px solid rgba(117,170,219,0.28);
+    border-radius: 2px; color: var(--columbia); font-size: 0.72rem;
+    padding: 0.2rem 0.6rem; display: flex; align-items: center; gap: 0.4rem; letter-spacing: 0.05em;
+  }
+  .date-tag button { background: none; border: none; color: rgba(117,170,219,0.45); cursor: pointer; font-size: 0.8rem; padding: 0; line-height: 1; transition: color 0.2s; }
+  .date-tag button:hover { color: #e8f2fc; }
+  .add-date-btn {
+    background: transparent; border: 1px dashed rgba(117,170,219,0.18); border-radius: 2px;
+    color: rgba(200,220,245,0.35); cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 0.75rem; letter-spacing: 0.1em;
+    margin-top: 0.5rem; padding: 0.5rem 1rem; text-transform: uppercase;
+    transition: border-color 0.2s, color 0.2s; width: 100%;
+  }
+  .add-date-btn:hover { border-color: var(--columbia); color: var(--columbia); }
+
+  .submit-row { margin-top: 2rem; display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+  .btn-submit {
+    background: var(--columbia-dark); border: none; border-radius: 2px; color: #e8f2fc;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.22em;
+    padding: 1rem 2.5rem; text-transform: uppercase; transition: background 0.25s, transform 0.2s;
+  }
+  .btn-submit:hover { background: #1a4578; transform: translateY(-1px); }
+  .btn-submit:active { transform: translateY(0); }
+  .submit-note { font-family: 'Cormorant Garamond', serif; font-size: 0.9rem; color: rgba(200,220,245,0.35); font-style: italic; }
+
+  .success-msg { display: none; text-align: center; padding: 3rem 2rem; }
+  .success-msg.show { display: block; }
+  .success-msg .check { font-size: 2.5rem; margin-bottom: 1rem; }
+  .success-msg h3 { font-family: 'Playfair Display', serif; font-size: 2rem; font-style: italic; color: #e8f2fc; margin-bottom: 0.75rem; }
+  .success-msg p { font-family: 'Cormorant Garamond', serif; color: rgba(200,220,245,0.5); font-size: 1.05rem; line-height: 1.8; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--columbia-deeper); border-top: 1px solid rgba(117,170,219,0.1);
+    padding: 2rem; text-align: center;
+    font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(200,220,245,0.3);
+  }
+  footer a { color: rgba(200,220,245,0.5); text-decoration: none; transition: color 0.2s; }
+  footer a:hover { color: #e8f2fc; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+  @media (max-width: 600px) {
+    .photo-card.wide { grid-column: span 1; aspect-ratio: 3/4; }
+    .form-grid { grid-template-columns: 1fr; }
+    .form-group.full { grid-column: 1; }
+    .submit-row { flex-direction: column; align-items: flex-start; }
+    .gallery-tabs { gap: 0.35rem; }
+    .tab-btn { font-size: 0.6rem; padding: 0.45rem 0.85rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO
+     ╔══════════════════════════════════════════════════════╗
+     ║  TO USE A BACKGROUND PHOTO:                         ║
+     ║  Find the .hero CSS rule above and change:          ║
+     ║    background: linear-gradient(...)                 ║
+     ║  to:                                                ║
+     ║    background: url('YOUR_URL') center/cover;        ║
+     ╚══════════════════════════════════════════════════════╝
+-->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <span class="hero-handle">@AudreaChenPhoto</span>
+  <div class="hero-content">
+    <h1 class="hero-title">Grad<br><em>Photos</em></h1>
+    <p class="hero-sub">
+      <span>Digital &amp; Film</span>
+      <span>24-hr Turnover</span>
+      <span>NYC &amp; Beyond</span>
+    </p>
+  </div>
+  <a href="#gallery" class="scroll-cue">See the Work</a>
+</section>
+
+<!-- ABOUT -->
+<section class="about">
+  <div class="about-inner">
+    <p class="label">The Experience</p>
+    <h2>Your milestone,<br><em>beautifully</em> preserved.</h2>
+    <div class="divider"></div>
+    <p>
+      Hate your grad photos? Want a shot at a re-do? Whether it's digital or film, I'll capture
+      this moment the way it deserves to be remembered — with soul, light, and a little magic.
+      Guaranteed 24-hour turnaround so you can share the memories right away.
+    </p>
+    <div class="divider"></div>
+    <p style="font-size:0.85rem;letter-spacing:0.08em;color:var(--columbia-dark);">sec2274@columbia.edu &nbsp;·&nbsp; DM for rates</p>
+  </div>
+</section>
+
+<!-- ══ GALLERY ══
+     HOW TO ADD YOUR PHOTOS
+     ══════════════════════
+     Each photo card below has an <img src=""> tag.
+     Replace the empty src="" with your image URL.
+
+     3 easy ways to get a URL:
+       1. Imgur.com  → upload → right-click image → "Copy image address"
+       2. Google Drive → share publicly (Anyone with link) →
+          use: https://drive.google.com/uc?id=PASTE_FILE_ID_HERE
+       3. iCloud / Dropbox shared link (change ?dl=0 → ?raw=1 for Dropbox)
+
+     To change the caption: edit the text in <div class="photo-caption">
+     To add more photos: duplicate any <div class="photo-card">...</div> block
+     Wide card (landscape): add class="photo-card wide"
+-->
+<section class="gallery" id="gallery">
+  <div class="gallery-header">
+    <p class="label" style="color:var(--columbia-dark)">Portfolio</p>
+    <h2>A look at the <em>work</em></h2>
+    <p>Browse by category — click a tab to explore.</p>
+  </div>
+
+  <div class="gallery-tabs">
+    <button class="tab-btn active" data-tab="solos">Graduation Solos</button>
+    <button class="tab-btn" data-tab="groups">Graduation Groups</button>
+    <button class="tab-btn" data-tab="headshots">LinkedIn Headshots</button>
+    <button class="tab-btn" data-tab="portraits">Portraits</button>
+    <button class="tab-btn" data-tab="events">Events</button>
+  </div>
+
+  <!-- GRADUATION SOLOS -->
+  <div class="gallery-grid active" id="tab-solos">
+    <div class="photo-card wide">
+      <img src="" alt="Graduation solo" onerror="this.style.display='none'">
+      <div class="placeholder">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1d4f8c" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        <span>Your photo here</span>
+      </div>
+      <div class="photo-caption">Low Steps, Columbia University</div>
+    </div>
+    <div class="photo-card">
+      <img src="" alt="Graduation solo" onerror="this.style.display='none'">
+      <div class="placeholder"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1d4f8c" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Your photo here</span></div>
+      <div class="photo-caption">Butler Library steps</div>
+    </div>
+    <div class="photo-card">
+      <img src="" alt="Graduation solo" onerror="this.style.display='none'">
+      <div class="placeholder"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1d4f8c" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Your photo here</span></div>
+      <div class="photo-caption">Cap &amp; gown, candid</div>
+    </div>
+    <div class="photo-card">
+      <img src="" alt="Graduation solo" onerror="this.style.display='none'">
+      <div class="placeholder"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1d4f8c" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Your photo here</span></div>
+      <div class="photo-caption">Golden hour portrait</div>
+    </div>
+    <div class="photo-card">
+      <img src="" alt="Graduation solo" onerror="this.style.display='none'">
+      <div class="placeholder"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1d4f8c" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Your photo here</span></div>
+      <div class="photo-caption">Diploma in hand</div>
+    </div>
+  </div>
+
+  <!-- GRADUATION GROUPS -->
+  <div class="gallery-grid" id="tab-groups">
+    <div class="photo-card wide">
+      <img src="" alt="Graduation group" onerror="this.style.display='none'">
+      <div class="placeholder"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1d4f8c" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Your photo here</span></div>
+      <div class="photo-caption">Friends on the steps</div>
+    </div>
+    <div class="photo-card">
+      <img src="" alt="Graduation group" onerror="this.style.display='none'">
+      <div class="placeholder"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1d4f8c" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Your photo here</span></div>
+      <div class="photo-caption">Squad goals</div>
+    </div>
+    <div class="photo-card">
+      <img src="" alt="Graduation group" onerror="this.style.display='none'">
+      <div class="placeholder"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1d4f8c" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Your photo here</span></div>
+      <div class="photo-caption">Candid celebration</div>
+    </div>
+    <div class="photo-card">
+      <img src="" alt="Graduation group" onerror="this.style.display='none'">
+      <div class="placeholder"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1d4f8c" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Your photo here</span></div>
+      <div class="photo-caption">Family portrait</div>
+    </div>
+  </div>
+
+  <!-- LINKEDIN HEADSHOTS -->
+  <div class="gallery-grid" id="tab-headshots">
+    <div class="photo-card">
+      <img src="" alt="LinkedIn headshot" onerror="this.style.display='none'">
+      <div class="placeholder"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1d4f8c" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Your photo here</span></div>
+      <div class="photo-caption">Professional headshot</div>
+    </div>
+    <div class="photo-card">
+      <img src="" alt="LinkedIn headshot" onerror="this.style.display='none'">
+      <div class="placeholder"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1d4f8c" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Your photo here</span></div>
+      <div class="photo-caption">Natural light headshot</div>
+    </div>
+    <div class="photo-card">
+      <img src="" alt="LinkedIn headshot" onerror="this.style.display='none'">
+      <div class="placeholder"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1d4f8c" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Your photo here</span></div>
+      <div class="photo-caption">Clean background</div>
+    </div>
+    <div class="photo-card">
+      <img src="" alt="LinkedIn headshot" onerror="this.style.display='none'">
+      <div class="placeholder"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1d4f8c" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Your photo here</span></div>
+      <div class="photo-caption">Outdoor editorial</div>
+    </div>
+  </div>
+
+  <!-- PORTRAITS -->
+  <div class="gallery-grid" id="tab-portraits">
+    <div class="photo-card">
+      <img src="" alt="Portrait" onerror="this.style.display='none'">
+      <div class="placeholder"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1d4f8c" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Your photo here</span></div>
+      <div class="photo-caption">Environmental portrait</div>
+    </div>
+    <div class="photo-card">
+      <img src="" alt="Portrait" onerror="this.style.display='none'">
+      <div class="placeholder"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1d4f8c" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Your photo here</span></div>
+      <div class="photo-caption">Film portrait</div>
+    </div>
+    <div class="photo-card wide">
+      <img src="" alt="Portrait" onerror="this.style.display='none'">
+      <div class="placeholder"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1d4f8c" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Your photo here</span></div>
+      <div class="photo-caption">Golden hour</div>
+    </div>
+    <div class="photo-card">
+      <img src="" alt="Portrait" onerror="this.style.display='none'">
+      <div class="placeholder"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1d4f8c" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Your photo here</span></div>
+      <div class="photo-caption">Editorial style</div>
+    </div>
+    <div class="photo-card">
+      <img src="" alt="Portrait" onerror="this.style.display='none'">
+      <div class="placeholder"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1d4f8c" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Your photo here</span></div>
+      <div class="photo-caption">Candid moment</div>
+    </div>
+  </div>
+
+  <!-- EVENTS -->
+  <div class="gallery-grid" id="tab-events">
+    <div class="photo-card wide">
+      <img src="" alt="Event" onerror="this.style.display='none'">
+      <div class="placeholder"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1d4f8c" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Your photo here</span></div>
+      <div class="photo-caption">Ceremony coverage</div>
+    </div>
+    <div class="photo-card">
+      <img src="" alt="Event" onerror="this.style.display='none'">
+      <div class="placeholder"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1d4f8c" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Your photo here</span></div>
+      <div class="photo-caption">Club event</div>
+    </div>
+    <div class="photo-card">
+      <img src="" alt="Event" onerror="this.style.display='none'">
+      <div class="placeholder"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1d4f8c" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Your photo here</span></div>
+      <div class="photo-caption">Panel &amp; speaker</div>
+    </div>
+    <div class="photo-card">
+      <img src="" alt="Event" onerror="this.style.display='none'">
+      <div class="placeholder"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1d4f8c" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Your photo here</span></div>
+      <div class="photo-caption">Celebration &amp; atmosphere</div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section class="booking" id="booking">
+  <div class="booking-inner">
+    <p class="label">Booking Request</p>
+    <h2>Let's make<br><em>something</em> beautiful.</h2>
+    <p class="booking-note">Fill out the form below and I'll be in touch within 24 hours to confirm your session.</p>
+
+    <form id="bookingForm" novalidate>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" placeholder="Your name" required>
+        </div>
+        <div class="form-group">
+          <label for="university">University Affiliation</label>
+          <input type="text" id="university" name="university" placeholder="e.g. Columbia University">
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" placeholder="(   )  —  ">
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" required>
+        </div>
+        <div class="form-group">
+          <label for="session">Session Type</label>
+          <select id="session" name="session">
+            <option value="" disabled selected>Select a format</option>
+            <option>Graduation Solos — Digital</option>
+            <option>Graduation Solos — Film</option>
+            <option>Graduation Solos — Digital + Film</option>
+            <option>Graduation Groups</option>
+            <option>LinkedIn Headshots</option>
+            <option>Portraits</option>
+            <option>Event Coverage</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="location">Preferred Location</label>
+          <input type="text" id="location" name="location" placeholder="e.g. Low Steps, Butler Library">
+        </div>
+        <div class="form-group full">
+          <label>Requested Date(s)</label>
+          <input type="date" id="dateInput" name="dateInput">
+          <p class="date-helper">Pick a date above, then click below to request multiple options.</p>
+          <div class="date-tags" id="dateTags"></div>
+          <button type="button" class="add-date-btn" id="addDateBtn">+ Add Another Date</button>
+          <input type="hidden" id="allDates" name="allDates">
+        </div>
+        <div class="form-group full">
+          <label for="comments">Comments &amp; Vision</label>
+          <textarea id="comments" name="comments" placeholder="Tell me your vibe, any specific shots you want, or anything else I should know..."></textarea>
+        </div>
+      </div>
+      <div class="submit-row">
+        <button type="submit" class="btn-submit">Send Request</button>
+        <span class="submit-note">I'll respond within 24 hours.</span>
+      </div>
+    </form>
+
+    <div class="success-msg" id="successMsg">
+      <div class="check">✦</div>
+      <h3>Request received.</h3>
+      <p>Thank you — I'll be in touch within 24 hours to confirm your session details.<br>
+      DM on Instagram or email<br><strong style="color:var(--columbia)">sec2274@columbia.edu</strong></p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 <a href="#">@AudreaChenPhoto</a> &nbsp;·&nbsp; <a href="mailto:sec2274@columbia.edu">sec2274@columbia.edu</a></p>
+</footer>
+
+<script>
+  // Gallery tabs
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.gallery-grid').forEach(g => g.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Date tags
+  const dateInput = document.getElementById('dateInput');
+  const addDateBtn = document.getElementById('addDateBtn');
+  const dateTags = document.getElementById('dateTags');
+  const allDates = document.getElementById('allDates');
+  let dates = [];
+
+  function renderTags() {
+    dateTags.innerHTML = '';
+    dates.forEach((d, i) => {
+      const tag = document.createElement('div');
+      tag.className = 'date-tag';
+      const f = new Date(d + 'T12:00:00').toLocaleDateString('en-US', {weekday:'short', month:'short', day:'numeric'});
+      tag.innerHTML = `${f} <button type="button" data-i="${i}">✕</button>`;
+      dateTags.appendChild(tag);
+    });
+    allDates.value = dates.join(', ');
+  }
+
+  function addCurrentDate() {
+    const val = dateInput.value;
+    if (!val || dates.includes(val)) { dateInput.value = ''; return; }
+    dates.push(val);
+    renderTags();
+    dateInput.value = '';
+  }
+
+  addDateBtn.addEventListener('click', addCurrentDate);
+  dateInput.addEventListener('change', addCurrentDate);
+  dateTags.addEventListener('click', e => {
+    const btn = e.target.closest('button');
+    if (btn) { dates.splice(+btn.dataset.i, 1); renderTags(); }
+  });
+
+  // Form submit
+  document.getElementById('bookingForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    if (!name || !email) { alert('Please fill in at least your name and email.'); return; }
+    document.getElementById('bookingForm').style.display = 'none';
+    document.getElementById('successMsg').classList.add('show');
+  });
+
+  document.querySelector('.scroll-cue').addEventListener('click', e => {
+    e.preventDefault();
+    document.getElementById('gallery').scrollIntoView({ behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>
